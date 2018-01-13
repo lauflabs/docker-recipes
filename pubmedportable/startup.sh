@@ -7,12 +7,4 @@ cd /PubMed2Go/
 python ./export_user_files.py $PG_DATA_DIR_DEFAULT
 service postgresql start
 
-if [ ! -f /export/.pubmed2go_save ]; then
-    python PubMedParser.py -i /export/import_data/ -d pubmed -p 4
-    cd full_text_index
-    python RunXapian.py --xapian_database_path /export/ --index --db_psql pubmed --no_search
-fi
-
-touch /export/.pubmed2go_save
-
-tail -f /var/log/postgresql/postgresql-9.1-main.log
+tailf /var/log/postgresql/postgresql-9.1-main.log
